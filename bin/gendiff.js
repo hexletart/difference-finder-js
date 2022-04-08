@@ -2,4 +2,8 @@
 import { Command } from "../node_modules/commander/esm.mjs";
 const program = new Command();
 
-console.log(program);
+program
+  .description('Compares two configuration files and shows a difference.')
+  .version('3.4.4');
+ 
+program.parse();
