@@ -30,4 +30,6 @@ jobs:
       - name: Run Tests
         run: |
           npm test
+        with:
+          codeclimate-id: ${{ secrets.CODECLIMATE_ID }}
 
