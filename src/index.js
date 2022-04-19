@@ -1,8 +1,9 @@
 import _ from 'lodash';
-import fileData from './data.js';
+import { readFile } from './data.js';
 
 export default (filepath1, filepath2, filler = ' ', fillerCount = 2) => {
-  const [file1, file2] = [fileData(filepath1), fileData(filepath2)];
+  const buildObjData = (file) => JSON.parse(readFile(file));
+  const [file1, file2] = [filepath1, filepath2].map((data) => buildObjData(data));
   const [file1Keys, file2Keys] = [Object.keys(file1), Object.keys(file2)];
   const uniqKeys = _.uniq([file1Keys, file2Keys].flat()).sort();
   const currentFiller = filler.repeat(fillerCount);
