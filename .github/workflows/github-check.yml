@@ -30,6 +30,10 @@ jobs:
       - name: Run Tests
         run: |
           npm test
+      - name: Test & publish code coverage
+        uses: paambaati/codeclimate-action@v3.0.0
+        env:
+          CODECLIMATE_ID: ${{secrets.CODECLIMATE_ID}}
         with:
-          codeclimate-id: ${{ secrets.CODECLIMATE_ID }}
-
+          coverageCommand: make test-coverage
+          debug: true
