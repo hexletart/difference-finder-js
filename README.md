@@ -4,5 +4,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/93cb84a4ec51dd78f2de/maintainability)](https://codeclimate.com/github/hexletart/frontend-project-lvl2/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/93cb84a4ec51dd78f2de/test_coverage)](https://codeclimate.com/github/hexletart/frontend-project-lvl2/test_coverage)
 
-Gendiff demonstration
-[![asciicast](https://asciinema.org/a/YhkK3Uowsfe5qqPwc8h8fIJiP.svg)](https://asciinema.org/a/YhkK3Uowsfe5qqPwc8h8fIJiP)
+Gendiff demonstration of JSON files
+[![asciicast](https://asciinema.org/a/489679.svg)](https://asciinema.org/a/489679)
+Gendiff demonstration of YAML files
+[![asciicast](https://asciinema.org/a/489683.svg)](https://asciinema.org/a/489683)
