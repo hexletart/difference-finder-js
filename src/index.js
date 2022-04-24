@@ -1,9 +1,10 @@
 import _ from 'lodash';
-import { readFile } from './data.js';
+import { getValidPath } from './data/filePath.js';
+import getDataByParcing from './data/parsers.js';
 
 export default (filepath1, filepath2, filler = ' ', fillerCount = 2) => {
-  const buildObjData = (file) => JSON.parse(readFile(file));
-  const [file1, file2] = [filepath1, filepath2].map((data) => buildObjData(data));
+  const [file1, file2] = [filepath1, filepath2].map((path) => getDataByParcing(getValidPath(path)));
+  if (!file1 || !file2) return null;
   const [file1Keys, file2Keys] = [Object.keys(file1), Object.keys(file2)];
   const uniqKeys = _.uniq([file1Keys, file2Keys].flat()).sort();
   const currentFiller = filler.repeat(fillerCount);
