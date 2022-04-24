@@ -1,10 +1,39 @@
-import gendiff from '../src/index.js';
-import { getFixturePath, readFile } from '../src/data.js';
+import { readFileSync } from 'fs';
+import gendiff from '../src/index';
+import { getFixturePath as getPath } from '../src/data/filePath';
 
-test('test_of_gendiff', () => {
-  const file1 = 'file1.json';
-  const file2 = 'file2.json';
-  const filesDifference = 'filesDiff.txt';
-  expect(gendiff(getFixturePath(file1), getFixturePath(file2)))
-    .toEqual(readFile(getFixturePath(filesDifference)));
+const testData = {
+  testForDiff: 'filesDiff.txt',
+  file1: 'jsonFile1.json',
+  file2: 'jsonFile2.json',
+  file3: 'yamlFile1.yaml',
+  file4: 'yamlFile2.yml',
+};
+
+test('gendiffCheck_json_json_1', () => {
+  expect(gendiff(getPath(testData.file1), getPath(testData.file2)))
+    .toEqual(readFileSync(getPath(testData.testForDiff), 'utf-8'));
+});
+
+test('gendiffCheck_json_yml', () => {
+  expect(gendiff(getPath(testData.file1), getPath(testData.file4)))
+    .toEqual(readFileSync(getPath(testData.testForDiff), 'utf-8'));
+});
+
+test('gendiffCheck_yaml_yml', () => {
+  expect(gendiff(getPath(testData.file3), getPath(testData.file4)))
+    .toEqual(readFileSync(getPath(testData.testForDiff), 'utf-8'));
+});
+
+test('gendiffCheck_yaml_json', () => {
+  expect(gendiff(getPath(testData.file3), getPath(testData.file2)))
+    .toEqual(readFileSync(getPath(testData.testForDiff), 'utf-8'));
+});
+
+test('gendiffCheck_null_json', () => {
+  expect(gendiff(getPath(null), getPath(testData.file2))).toBe(null);
+});
+
+test('gendiffCheck_json_null', () => {
+  expect(gendiff(getPath(testData.file3), getPath(null))).toBe(null);
 });
