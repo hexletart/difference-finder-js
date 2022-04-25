@@ -15,25 +15,6 @@ test('gendiffCheck_json_json_1', () => {
     .toEqual(readFileSync(getPath(testData.testForDiff), 'utf-8'));
 });
 
-test('gendiffCheck_json_yml', () => {
-  expect(gendiff(getPath(testData.file1), getPath(testData.file4)))
-    .toEqual(readFileSync(getPath(testData.testForDiff), 'utf-8'));
-});
-
-test('gendiffCheck_yaml_yml', () => {
-  expect(gendiff(getPath(testData.file3), getPath(testData.file4)))
-    .toEqual(readFileSync(getPath(testData.testForDiff), 'utf-8'));
-});
-
-test('gendiffCheck_yaml_json', () => {
-  expect(gendiff(getPath(testData.file3), getPath(testData.file2)))
-    .toEqual(readFileSync(getPath(testData.testForDiff), 'utf-8'));
-});
-
 test('gendiffCheck_null_json', () => {
   expect(gendiff(getPath(null), getPath(testData.file2))).toBe(null);
-});
-
-test('gendiffCheck_json_null', () => {
-  expect(gendiff(getPath(testData.file3), getPath(null))).toBe(null);
 });
