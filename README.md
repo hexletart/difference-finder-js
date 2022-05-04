@@ -8,3 +8,5 @@ Gendiff demonstration of JSON files
 [![asciicast](https://asciinema.org/a/489679.svg)](https://asciinema.org/a/489679)
 Gendiff demonstration of YAML files
 [![asciicast](https://asciinema.org/a/489683.svg)](https://asciinema.org/a/489683)
+Gendiff demonstration of nested files plus formatter
+[![asciicast](https://asciinema.org/a/492160.svg)](https://asciinema.org/a/492160)
