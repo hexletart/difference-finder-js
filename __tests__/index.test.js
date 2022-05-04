@@ -1,20 +1,30 @@
 import { readFileSync } from 'fs';
-import gendiff from '../src/index';
+import genDiff from '../src/index';
 import { getFixturePath as getPath } from '../src/data/filePath';
 
-const testData = {
-  testForDiff: 'filesDiff.txt',
-  file1: 'jsonFile1.json',
-  file2: 'jsonFile2.json',
-  file3: 'yamlFile1.yaml',
-  file4: 'yamlFile2.yml',
-};
-
-test('gendiffCheck_json_json_1', () => {
-  expect(gendiff(getPath(testData.file1), getPath(testData.file2)))
-    .toEqual(readFileSync(getPath(testData.testForDiff), 'utf-8'));
+test('empty_test_of_genDiff', () => {
+  expect(genDiff(null, getPath(null))).toBe(null);
 });
 
-test('gendiffCheck_null_json', () => {
-  expect(gendiff(getPath(null), getPath(testData.file2))).toBe(null);
+test('not_valid_format_for_gendiff', () => {
+  const first = 'jsonFile2.json';
+  const second = 'diffTestJson1Yaml2.txt';
+  const expected = 'diffTestJson2Txt.txt';
+  expect(genDiff(getPath(first), getPath(second)))
+    .toEqual(readFileSync(getPath(expected), 'utf-8'));
+});
+
+test('json_and_yml_for_gendiff', () => {
+  const first = 'jsonFile1.json';
+  const second = 'yamlFile2.yml';
+  const expected = 'diffTestJson1Yaml2.txt';
+  expect(genDiff(getPath(first), getPath(second)))
+    .toEqual(readFileSync(getPath(expected), 'utf-8'));
+});
+
+test('not_valid_value_for_formatter', () => {
+  const first = 'yamlFile1.yaml';
+  const second = 'jsonFile2.json';
+  const format = 'format';
+  expect(genDiff(getPath(first), getPath(second), format)).toBe(null);
 });
