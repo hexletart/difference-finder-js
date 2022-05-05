@@ -25,11 +25,11 @@ const buildBranchByKey = (file1, file2, uniqKey, callback) => {
   if (_.isUndefined(file2) && _.isObject(file1)) return [{ sign: ' ', key: uniqKey, value: callback(value1) }];
   let str;
   if (_.has(file1, uniqKey) && !isInSecond) {
-    str = [{ sign: '-', key: uniqKey, value: callback(value1) }];
+    str = [{ sign: '-', key: uniqKey, value: value1 }];
   } else if (isInSecond && !isInFirst) {
-    str = [{ sign: '+', key: uniqKey, value: callback(value2) }];
+    str = [{ sign: '+', key: uniqKey, value: value2 }];
   } else if (_.isEqual(value1, value2)) {
-    str = [{ sign: ' ', key: uniqKey, value: callback(value1) }];
+    str = [{ sign: ' ', key: uniqKey, value: value1 }];
   } else {
     str = (_.isObject(value1) && _.isObject(value2))
       ? { sign: ' ', key: uniqKey, value: callback(value1, value2) }
