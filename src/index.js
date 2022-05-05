@@ -18,14 +18,15 @@ const stylish = (inputTree, format, dash = ' ', dashLength = 2) => {
 };
 
 const buildBranchByKey = (file1, file2, uniqKey, callback) => {
+  const isInFirst = _.has(file1, uniqKey);
+  const isInSecond = _.has(file2, uniqKey);
   const value1 = _.get(file1, uniqKey);
   const value2 = _.get(file2, uniqKey);
+  if (_.isUndefined(file2) && _.isObject(file1)) return [{ sign: ' ', key: uniqKey, value: callback(value1) }];
   let str;
-  if (_.isUndefined(file2) && _.isObject(file1)) {
-    return [{ sign: ' ', key: uniqKey, value: callback(value1) }];
-  } if (_.has(file1, uniqKey) && !_.has(file2, uniqKey)) {
+  if (_.has(file1, uniqKey) && !isInSecond) {
     str = [{ sign: '-', key: uniqKey, value: callback(value1) }];
-  } else if (_.has(file2, uniqKey) && !_.has(file1, uniqKey)) {
+  } else if (isInSecond && !isInFirst) {
     str = [{ sign: '+', key: uniqKey, value: callback(value2) }];
   } else if (_.isEqual(value1, value2)) {
     str = [{ sign: ' ', key: uniqKey, value: callback(value1) }];
