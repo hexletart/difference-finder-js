@@ -37,11 +37,11 @@ export default (filepath1, filepath2, format = 'stylish') => {
         if (isInFirst && !isInSecond) return [{ sign: '-', key: uniqKey, value: diffIdent(value1) }];
         if (isInSecond && !isInFirst) return [{ sign: '+', key: uniqKey, value: diffIdent(value2) }];
         if (_.isEqual(value1, value2)) return [{ sign: ' ', key: uniqKey, value: diffIdent(value1) }];
-        return (_.isObject(value1) && _.isObject(value2)) ? { sign: ' ', key: uniqKey, value: diffIdent(value1, value2) }
-          : [
-            { sign: '-', key: uniqKey, value: diffIdent(value1) },
-            { sign: '+', key: uniqKey, value: diffIdent(value2) },
-          ];
+        if (_.isObject(value1) && _.isObject(value2)) return { sign: ' ', key: uniqKey, value: diffIdent(value1, value2) };
+        return [
+          { sign: '-', key: uniqKey, value: diffIdent(value1) },
+          { sign: '+', key: uniqKey, value: diffIdent(value2) },
+        ];
       };
       return buildBranchByKey(key);
     }).flat();
