@@ -18,16 +18,14 @@ const stylish = (inputTree, format, dash = ' ', dashLength = 2) => {
 };
 
 const buildBranchByKey = (file1, file2, uniqKey, callback) => {
-  const isInFirst = _.has(file1, uniqKey);
-  const isInSecond = _.has(file2, uniqKey);
   const value1 = _.get(file1, uniqKey);
   const value2 = _.get(file2, uniqKey);
   let str;
   if (_.isUndefined(file2) && _.isObject(file1)) {
     return [{ sign: ' ', key: uniqKey, value: callback(value1) }];
-  } if (isInFirst && !isInSecond) {
+  } if (_.has(file1, uniqKey) && !_.has(file2, uniqKey)) {
     str = [{ sign: '-', key: uniqKey, value: callback(value1) }];
-  } else if (isInSecond && !isInFirst) {
+  } else if (_.has(file2, uniqKey) && !_.has(file1, uniqKey)) {
     str = [{ sign: '+', key: uniqKey, value: callback(value2) }];
   } else if (_.isEqual(value1, value2)) {
     str = [{ sign: ' ', key: uniqKey, value: callback(value1) }];
@@ -52,10 +50,7 @@ export default (filepath1, filepath2, format = 'stylish') => {
     const objKeys = [file1, file2]
       .filter((data) => _.isObject(data)).map((data) => Object.keys(data)).flat();
     const uniqKeys = _.uniq(objKeys).sort();
-    const getTree = uniqKeys.map((key) => {
-      return buildBranchByKey(file1, file2, key, diffIdent);
-    }).flat();
-    return getTree;
+    return uniqKeys.map((key) => buildBranchByKey(file1, file2, key, diffIdent)).flat();
   };
   const filesDiff = diffIdent(fileData1, fileData2);
   return stylish(filesDiff, format);
