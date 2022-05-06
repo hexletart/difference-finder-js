@@ -14,14 +14,6 @@ test('not_valid_format_for_gendiff', () => {
     .toEqual(readFileSync(getPath(expected), 'utf-8'));
 });
 
-test('json_and_yml_for_gendiff', () => {
-  const first = 'jsonFile1.json';
-  const second = 'yamlFile2.yml';
-  const expected = 'diffTestJson1Yaml2.txt';
-  expect(genDiff(getPath(first), getPath(second)))
-    .toEqual(readFileSync(getPath(expected), 'utf-8'));
-});
-
 test('not_valid_value_for_formatter', () => {
   const first = 'yamlFile1.yaml';
   const second = 'jsonFile2.json';
