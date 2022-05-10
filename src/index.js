@@ -22,10 +22,7 @@ const getDataByFormat = (inputTree, format, dash = ' ', dashLength = 2) => {
   return null;
 };
 
-export default (format, filepath1, filepath2) => {
-  console.log(format);
-  console.log(filepath1);
-  console.log(filepath2);
+export default (filepath1, filepath2, format) => {
   const [fileData1, fileData2] = [filepath1, filepath2]
     .map((path) => getDataByParcing(getValidPath(path)));
   if (!fileData1 && !fileData2) return null;
