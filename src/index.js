@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { getValidPath } from './data/filePath.js';
 import getDataByParcing from './data/parsers.js';
 
-const stylish = (inputTree, format, dash = ' ', dashLength = 2) => {
+const getDataByFormat = (inputTree, format, dash = ' ', dashLength = 2) => {
   const getStylishOutput = (tree, depth = 1) => {
     const currentGap = (level) => dash.repeat(dashLength * level);
     const bracketGap = (level) => dash.repeat((dashLength * level) - dashLength);
@@ -53,5 +53,5 @@ export default (filepath1, filepath2, format = 'stylish') => {
     return getTree;
   };
   const filesDiff = diffIdent(fileData1, fileData2);
-  return stylish(filesDiff, format);
+  return getDataByFormat(filesDiff, format);
 };
