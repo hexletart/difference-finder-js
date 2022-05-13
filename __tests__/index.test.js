@@ -8,7 +8,7 @@ test('empty_values_for_genDiff', () => {
   expect(genDiff(null, getPath(null), defaultFormatValue)).toBe(null);
 });
 
-test('format_mix_check_for_gendiff', () => {
+test('mix_check_for_gendiff_by_default_format', () => {
   const first = 'jsonFile1.json';
   const second = 'yamlFile2.yml';
   const expected = 'stylishDiffOfTwo.txt';
@@ -27,4 +27,13 @@ test('not_valid_value_for_formatter', () => {
   const second = 'jsonFile2.json';
   const format = 'format';
   expect(genDiff(getPath(first), getPath(second), format)).toBe(null);
+});
+
+test('json_check_for_gendiff_by_plain_format', () => {
+  const first = 'jsonFile1.json';
+  const second = 'jsonFile2.json';
+  const format = 'plain';
+  const expected = 'plainDiffOfTwo.txt';
+  expect(genDiff(getPath(first), getPath(second), format))
+    .toEqual(readFileSync(getPath(expected), 'utf-8'));
 });
