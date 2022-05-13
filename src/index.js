@@ -1,26 +1,7 @@
 import _ from 'lodash';
 import { getValidPath } from './data/filePath.js';
 import getDataByParcing from './data/parsers.js';
-
-const getDataByFormat = (inputTree, format, dash = ' ', dashLength = 2) => {
-  const getStylishOutput = (tree, depth = 1) => {
-    const currentGap = (level) => dash.repeat(dashLength * level);
-    const bracketGap = (level) => dash.repeat((dashLength * level) - dashLength);
-    const lines = tree.reduce((acc, branch) => {
-      const [branchData, prefix = ' '] = [branch].flat();
-      const linesChunk = Object.entries(branchData)
-        .map(([key, value]) => {
-          const currentValue = (_.isObject(value))
-            ? getStylishOutput([value].flat(), depth + 2) : value;
-          return `${currentGap(depth)}${prefix} ${key}: ${currentValue}`;
-        });
-      return [...acc, ...linesChunk];
-    }, []);
-    return ['{', ...lines, `${bracketGap(depth)}}`].join('\n');
-  };
-  if (format === 'stylish') return getStylishOutput(inputTree);
-  return null;
-};
+import getDataByFormat from './formatters/index.js';
 
 export default (filepath1, filepath2, format) => {
   const [fileData1, fileData2] = [filepath1, filepath2]
