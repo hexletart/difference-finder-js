@@ -32,8 +32,7 @@ export default (inpuTtree) => {
           if (sign === '-' && isUniq) {
             printCall = buildString(rootForPrint, 'removed');
           } else if (sign === '-' && !isUniq) {
-            const [value1, value2] = preparedObjTree
-              .map((el) => _.get(el, key, [])).flat();
+            const [value1, value2] = preparedObjTree.map((el) => _.get(el, key, [])).flat();
             printCall = (buildString(rootForPrint, 'updated', value1, value2));
           } else if (sign === '+' && isUniq) {
             printCall = buildString(rootForPrint, 'added', value);
@@ -48,8 +47,5 @@ export default (inpuTtree) => {
     }).flat();
     return branches.join('\n');
   };
-
   return buildComparison(inpuTtree);
 };
-
-// ИЗУЧИ БЫСТРЫЕ КЛАВИШИ
