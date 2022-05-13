@@ -2,9 +2,9 @@ import _ from 'lodash';
 
 export default (inpuTtree) => {
   const buildString = (layout, action, ...options) => {
-    const [option1, option2] = options
+    const [option1, option2] = options.filter((el) => !_.isUndefined(el))
       .map((el) => ((typeof el === 'string') ? `'${el}'` : el))
-      .map((el) => (_.isObject(el) ? '[complex value]' : el));
+      .map((el) => (_.isObject(el) ? `${'[complex value]'}` : el));
     const prefix = `Property '${layout}' was`;
     let body;
     switch (action) {
@@ -12,9 +12,7 @@ export default (inpuTtree) => {
         break;
       case 'added': body = `added with value: ${option1}`;
         break;
-      case 'updated': body = `updated. From ${option1} to ${option2}`;
-        break;
-      default: body = 'not mentioned';
+      default: body = `updated. From ${option1} to ${option2}`;
     }
     return `${prefix} ${body}`;
   };
@@ -23,9 +21,9 @@ export default (inpuTtree) => {
     const preparedTree = [tree].flat();
     const preparedObjTree = (preparedTree).flat().filter((el) => _.isObject(el));
     const keys = preparedObjTree.map((el) => Object.keys(el)).flat();
-    const blocks = preparedTree.map((branch) => {
-      const [valueData, sign] = branch;
-      const lines = Object.entries(valueData)
+    const branches = preparedTree.map((branch) => {
+      const [branchData, sign] = branch;
+      const leafs = Object.entries(branchData)
         .map(([key, value]) => {
           const newRoot = [...root, key];
           const rootForPrint = newRoot.join('.');
@@ -46,10 +44,11 @@ export default (inpuTtree) => {
           }
           return printCall;
         }).flat();
-      return lines;
+      return leafs;
     }).flat();
-    return blocks.join('\n');
+    return branches.join('\n');
   };
+
   return buildComparison(inpuTtree);
 };
 
