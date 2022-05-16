@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-export default (inpuTtree) => {
+export default (inputTree) => {
   const buildString = (layout, action, ...options) => {
     const [option1, option2] = options.filter((el) => !_.isUndefined(el))
       .map((el) => ((typeof el === 'string') ? `'${el}'` : el))
@@ -16,13 +16,11 @@ export default (inpuTtree) => {
     }
     return `${prefix} ${body}`;
   };
-
   const buildComparison = (tree, root = []) => {
-    const preparedTree = [tree].flat();
-    const preparedObjTree = (preparedTree).flat().filter((el) => _.isObject(el));
-    const keys = preparedObjTree.map((el) => Object.keys(el)).flat();
-    const branches = preparedTree.map((branch) => {
-      const [branchData, sign] = branch;
+    const branchesData = tree.map((branch) => branch[_.head(Object.keys(branch))]);
+    const keys = branchesData.map((branch) => Object.keys(branch)).flat();
+    const branches = tree.map((branch) => {
+      const [branchData, sign] = Object.keys(branch).map((key) => branch[key]);
       const leafs = Object.entries(branchData)
         .map(([key, value]) => {
           const newRoot = [...root, key];
@@ -32,12 +30,12 @@ export default (inpuTtree) => {
           if (sign === '-' && isUniq) {
             printCall = buildString(rootForPrint, 'removed');
           } else if (sign === '-' && !isUniq) {
-            const [value1, value2] = preparedObjTree.map((el) => _.get(el, key, [])).flat();
+            const [value1, value2] = branchesData.map((el) => _.get(el, key, [])).flat();
             printCall = (buildString(rootForPrint, 'updated', value1, value2));
           } else if (sign === '+' && isUniq) {
             printCall = buildString(rootForPrint, 'added', value);
           } else if (sign === ' ') {
-            printCall = (_.isObject(value)) ? buildComparison(value, newRoot) : [];
+            printCall = (_.isArray(value)) ? buildComparison(value, newRoot) : [];
           } else {
             printCall = [];
           }
@@ -47,5 +45,5 @@ export default (inpuTtree) => {
     }).flat();
     return branches.join('\n');
   };
-  return buildComparison(inpuTtree);
+  return buildComparison(inputTree);
 };

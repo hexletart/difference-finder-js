@@ -18,22 +18,20 @@ export default (filepath1, filepath2, format) => {
         const isInSecond = _.has(file2, uniqKey);
         const value1 = _.get(file1, uniqKey);
         const value2 = _.get(file2, uniqKey);
-        if (isInFirst && !isInSecond) return [{ [uniqKey]: diffIdent(value1) }, '-'];
-        if (isInSecond && !isInFirst) return [{ [uniqKey]: diffIdent(value2) }, '+'];
+        if (isInFirst && !isInSecond) return { node: { [uniqKey]: diffIdent(value1) }, mark: '-' };
+        if (isInSecond && !isInFirst) return { node: { [uniqKey]: diffIdent(value2) }, mark: '+' };
         if ((!_.isObject(value1) || !_.isObject(value2)) && !_.isEqual(value1, value2)) {
           return [
-            [{ [uniqKey]: diffIdent(value1) }, '-'],
-            [{ [uniqKey]: diffIdent(value2) }, '+'],
+            { node: { [uniqKey]: diffIdent(value1) }, mark: '-' },
+            { node: { [uniqKey]: diffIdent(value2) }, mark: '+' },
           ].flat();
         }
-        return [{ [uniqKey]: diffIdent(value1, value2) }, ' '];
+        return { node: { [uniqKey]: diffIdent(value1, value2) }, mark: ' ' };
       };
-      const treeData = (buildBranchByKey(key));
-      return _.chunk(treeData, 2);
+      return buildBranchByKey(key);
     });
     return getTree;
   };
   const filesDiff = diffIdent(fileData1, fileData2);
-  console.log(format);
   return getDataByFormat(filesDiff, format);
 };
