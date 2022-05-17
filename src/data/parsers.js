@@ -8,5 +8,5 @@ export default (filePath) => {
   const fileExt = path.extname(filePath);
   if (fileExt === '.json') return JSON.parse(fileData);
   if (fileExt === '.yaml' || fileExt === '.yml') return yaml.load(fileData);
-  return null;
+  return `${filePath}`;
 };
