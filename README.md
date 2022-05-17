@@ -12,3 +12,5 @@ Gendiff demonstration of nested files plus stylish formatter
 [![asciicast](https://asciinema.org/a/492160.svg)](https://asciinema.org/a/492160)
 Gendiff demonstration of nested files plus plain formatter
 [![asciicast](https://asciinema.org/a/494225.svg)](https://asciinema.org/a/494225)
+Gendiff demonstration of nested files plus json formatter
+[![asciicast](https://asciinema.org/a/495274.svg)](https://asciinema.org/a/495274)
