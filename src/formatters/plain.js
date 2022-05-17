@@ -12,7 +12,9 @@ export default (inputTree) => {
         break;
       case 'added': body = `added with value: ${option1}`;
         break;
-      default: body = `updated. From ${option1} to ${option2}`;
+      case 'updated': body = `updated. From ${option1} to ${option2}`;
+        break;
+      default: body = '. Something went wrong';
     }
     return `${prefix} ${body}`;
   };
