@@ -6,7 +6,7 @@ import getDataByFormat from './formatters/index.js';
 export default (filepath1, filepath2, format) => {
   const [fileData1, fileData2] = [filepath1, filepath2]
     .map((path) => getDataByParcing(getValidPath(path)));
-  if ((!fileData1 && !fileData2) || (_.isEqual(fileData1, fileData2))) return null;
+  // if ((!fileData1 && !fileData2) || (_.isEqual(fileData1, fileData2))) return null;
   const diffIdent = (file1, file2) => {
     if (_.isUndefined(file2) || _.isEqual(file1, file2)) return file1;
     const objKeys = [file1, file2]
