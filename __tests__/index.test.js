@@ -29,11 +29,20 @@ test('not_valid_value_for_formatter', () => {
   expect(genDiff(getPath(first), getPath(second), format)).toBe(null);
 });
 
-test('json_check_for_gendiff_by_plain_format', () => {
-  const first = 'jsonFile1.json';
-  const second = 'jsonFile2.json';
+test('yaml_check_for_gendiff_by_plain_format', () => {
+  const first = 'yamlFile1.yaml';
+  const second = 'yamlFile2.yml';
   const format = 'plain';
   const expected = 'plainDiffOfTwo.txt';
+  expect(genDiff(getPath(first), getPath(second), format))
+    .toEqual(readFileSync(getPath(expected), 'utf-8'));
+});
+
+test('json_check_for_gendiff_by_json_format', () => {
+  const first = 'jsonFile1.json';
+  const second = 'jsonFile2.json';
+  const format = 'json';
+  const expected = 'jsonDiffOfTwo.txt';
   expect(genDiff(getPath(first), getPath(second), format))
     .toEqual(readFileSync(getPath(expected), 'utf-8'));
 });
