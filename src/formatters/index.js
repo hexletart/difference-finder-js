@@ -7,6 +7,6 @@ export default (treeData, format) => {
     case 'stylish': return getStylishOutput(treeData);
     case 'plain': return getPlainOutput(treeData);
     case 'json': return getJsonOutput(treeData);
-    default: return `${treeData}${'\n'}${format}`;
+    default: return `${JSON.stringify(treeData)}${'\n'}${format}`;
   }
 };
