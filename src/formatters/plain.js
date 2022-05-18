@@ -1,16 +1,16 @@
 import _ from 'lodash';
 
 export default (inputTree) => {
-  const buildString = (layout, notice, ...options) => {
-    const [option1, option2] = options.filter((el) => !_.isUndefined(el))
+  const buildString = (layout, notice, parameter1, parameter2) => {
+    const [par1, par2] = [parameter1, parameter2].filter((el) => !_.isUndefined(el))
       .map((el) => ((typeof el === 'string') ? `'${el}'` : el))
       .map((el) => (_.isObject(el) ? `${'[complex value]'}` : el));
     const prefix = `Property '${layout}' was`;
     const getBody = (action) => {
       switch (action) {
         case 'removed': return 'removed';
-        case 'added': return `added with value: ${option1}`;
-        case 'updated': return `updated. From ${option1} to ${option2}`;
+        case 'added': return `added with value: ${par1}`;
+        case 'updated': return `updated. From ${par1} to ${par2}`;
         default: return '. Something went wrong';
       }
     };
