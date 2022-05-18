@@ -25,8 +25,9 @@ test('wrong_format_for_parsers', () => {
 test('not_valid_value_for_formatter', () => {
   const first = 'yamlFile1.yaml';
   const second = 'jsonFile2.json';
-  const format = 'format';
-  expect(genDiff(getPath(first), getPath(second), format)).toBe(null);
+  const format = 'unknown';
+  const expected = 'Something went wrong with unknown format.';
+  expect(genDiff(getPath(first), getPath(second), format)).toBe(expected);
 });
 
 test('yaml_check_for_gendiff_by_plain_format', () => {

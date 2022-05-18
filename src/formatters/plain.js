@@ -11,7 +11,7 @@ export default (inputTree) => {
         case 'removed': return 'removed';
         case 'added': return `added with value: ${par1}`;
         case 'updated': return `updated. From ${par1} to ${par2}`;
-        default: return '. Something went wrong';
+        default: return `Something went wrogn with ${action} action.`;
       }
     };
     const body = getBody(notice);
