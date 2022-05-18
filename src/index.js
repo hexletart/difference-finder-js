@@ -3,7 +3,7 @@ import { getValidPath } from './data/filePath.js';
 import getDataByParcing from './data/parsers.js';
 import getDataByFormat from './formatters/index.js';
 
-export default (filepath1, filepath2, format) => {
+export default (filepath1, filepath2, format = 'stylish') => {
   const [fileData1, fileData2] = [filepath1, filepath2]
     .map((path) => getDataByParcing(getValidPath(path)));
   if ((!fileData1 && !fileData2) || (_.isEqual(fileData1, fileData2))) return null;
