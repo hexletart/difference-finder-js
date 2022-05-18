@@ -11,7 +11,7 @@ export default (filepath1, filepath2, format = 'stylish') => {
     if (_.isUndefined(file2) || _.isEqual(file1, file2)) return file1;
     const objKeys = [file1, file2]
       .filter((data) => _.isObject(data)).map((data) => Object.keys(data)).flat();
-    const uniqKeys = _.uniq(objKeys).sort();
+    const uniqKeys = _.sortBy(_.uniq(objKeys));
     const getTree = uniqKeys.flatMap((key) => {
       const buildBranchByKey = (uniqKey) => {
         const isInFirst = _.has(file1, uniqKey);
