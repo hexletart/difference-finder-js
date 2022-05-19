@@ -1,49 +1,22 @@
+/* eslint-disable object-curly-newline */
 import { readFileSync } from 'fs';
 import genDiff from '../src/index';
 import { getFixturePath as getPath } from '../src/data/filePath';
 
-const defaultFormatValue = 'stylish';
+const formatterSet = [
+  { a: 'jsonFile1.json', b: 'yamlFile2.yml', expected: 'stylishOutput.txt', format: 'stylish' },
+  { a: 'yamlFile1.yaml', b: 'jsonFile2.json', expected: 'plainOutput.txt', format: 'plain' },
+  { a: 'jsonFile1.json', b: 'jsonFile2.json', expected: 'jsonOutput.txt', format: 'json' },
+];
 
-test('empty_values_for_genDiff', () => {
-  expect(genDiff(null, getPath(null), defaultFormatValue)).toBe(null);
+test('default formatter of equal values of gendiff', () => {
+  const equalValue = 'jsonFile1.json';
+  const expectedStaitment = 'Values are the same';
+  expect(genDiff(getPath(equalValue), getPath(equalValue)))
+    .toBe(expectedStaitment);
 });
 
-test('mix_check_for_gendiff_by_default_format', () => {
-  const first = 'jsonFile1.json';
-  const second = 'yamlFile2.yml';
-  const expected = 'stylishDiffOfTwo.txt';
-  expect(genDiff(getPath(first), getPath(second)))
-    .toEqual(readFileSync(getPath(expected), 'utf-8'));
-});
-
-test('wrong_format_for_parsers', () => {
-  const wrongFile = 'stylishDiffOfTwo.txt';
-  expect(genDiff(getPath(wrongFile), getPath(wrongFile), defaultFormatValue))
-    .toBe(null);
-});
-
-test('not_valid_value_for_formatter', () => {
-  const first = 'yamlFile1.yaml';
-  const second = 'jsonFile2.json';
-  const format = 'unknown';
-  const expected = 'Something went wrong with unknown format.';
-  expect(genDiff(getPath(first), getPath(second), format)).toBe(expected);
-});
-
-test('yaml_check_for_gendiff_by_plain_format', () => {
-  const first = 'yamlFile1.yaml';
-  const second = 'yamlFile2.yml';
-  const format = 'plain';
-  const expected = 'plainDiffOfTwo.txt';
-  expect(genDiff(getPath(first), getPath(second), format))
-    .toEqual(readFileSync(getPath(expected), 'utf-8'));
-});
-
-test('json_check_for_gendiff_by_json_format', () => {
-  const first = 'jsonFile1.json';
-  const second = 'jsonFile2.json';
-  const format = 'json';
-  const expected = 'jsonDiffOfTwo.txt';
-  expect(genDiff(getPath(first), getPath(second), format))
+test.each(formatterSet)('$format formatter of gendiff', ({ a, b, expected, format }) => {
+  expect(genDiff(getPath(a), getPath(b), format))
     .toEqual(readFileSync(getPath(expected), 'utf-8'));
 });
